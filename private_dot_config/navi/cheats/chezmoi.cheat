@@ -1,0 +1,28 @@
+% chezmoi: manage your dotfiles
+
+# Initialize chezmoi in your home directory
+chezmoi init
+
+# Add a file to chezmoi
+chezmoi add <file>
+
+# Apply changes to your home directory
+chezmoi apply -v
+
+# Edit a file managed by chezmoi
+chezmoi edit <file>
+
+# List files managed by chezmoi
+chezmoi managed
+
+# Update chezmoi from remote
+chezmoi update
+
+# Diff between chezmoi and home directory
+chezmoi diff
+
+# Remove a file from chezmoi
+chezmoi remove <file>
+
+# Enter chezmoi shell
+chezmoi cd
