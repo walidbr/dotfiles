@@ -1,0 +1,41 @@
+# Docker
+% docker ps
+docker <action> <containers>
+$ action: printf "%s\n" stop kill restart start logs inspect --- --prevent-extra
+$ scope: printf "%s\n" running all --- --prevent-extra
+$ containers: bash -lc 'if [ "<scope>" = running ]; then docker ps --format "{{.Names}}"; else docker ps -a --format "{{.Names}}"; fi' --- --multi --expand --prevent-extra
+
+% docker images
+bash -lc 'while IFS=$'\''\t'\'' read -r id rest; do if [ "<action>" = "rmi -f" ]; then docker rmi -f "$id"; else docker <action> "$id"; fi; done <<< "<images>"'
+$ action: printf "%s\n" "rmi" "rmi -f" inspect history --- --prevent-extra
+$ images: docker images --no-trunc --format "{{.ID}}\t{{.Repository}}:{{.Tag}}" --- --multi --prevent-extra
+
+# System
+% ps
+bash -lc 'while IFS= read -r line; do \
+  pid="${line%%$'\''\t'\''*}"; \
+  case "<action>" in \
+    "kill -9") echo "Killing PID $pid" >&2; kill -9 "$pid";; \
+    "view resources") ps -p "$pid" -o pid,ppid,cmd,%mem,%cpu;; \
+    "view ports") sudo lsof -i -a -p "$pid";; \
+    "view files") sudo lsof -p "$pid";; \
+  esac; \
+done <<< "<procs>"'
+$ action: printf "%s\n" "kill -9" "view resources" "view ports" "view files" --- --prevent-extra
+$ procs: ps -eo pid,comm --- --multi --prevent-extra
+
+% systemctl (linux only)
+sudo systemctl <action> <service>
+$ action: printf "%s\n" status restart start stop enable disable --- --prevent-extra
+$ service: systemctl list-units --type=service --all --no-legend | awk '{print $1}' --- --prevent-extra
+
+% Jenkins run precommit cli
+curl -X POST "http://acl.ml.arm.com/jenkins/job/ComputeLibraryLinaro_precommit_new_dev/buildWithParameters" \
+  --user $JENKINS_USER_ID:$JENKINS_API_TOKEN \
+  --data-urlencode "GERRIT_REFSPEC=refs/heads/main" \
+  --data-urlencode "ENABLE_PRE_COMMIT_HOOKS=true" \
+  --data-urlencode "GERRIT_BRANCH=dev_perfetto" \
+  --data-urlencode "GERRIT_EVENT_ACCOUNT_EMAIL=Walid.Benromdhane@arm.com" \
+  --data-urlencode "GERRIT_CHANGE_OWNER_EMAIL=Walid.Benromdhane@arm.com" \
+  --data-urlencode "API_CHECK_JOB_NAME=ComputeLibrary_API_BREAKS_CHECK_dev" && \
+  open https://acl.ml.arm.com/jenkins/job/ComputeLibraryLinaro_precommit_new_dev/

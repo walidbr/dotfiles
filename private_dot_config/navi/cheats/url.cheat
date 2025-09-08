@@ -1,0 +1,68 @@
+# Url shortcuts
+% gemini
+open https://gemini.google.com/app
+% sprint
+open https://jira.arm.com/secure/RapidBoard.jspa?rapidView=6918&sprint=50523#
+% perfetto
+open https://ui.perfetto.dev
+% acl github
+open https://review.mlplatform.org/dashboard/self
+% acl gerrit
+open https://eu-gerrit-1.euhpc.arm.com/dashboard/self
+% book desk
+open https://engage.spaceiq.com/floor/175
+% n8n web ui
+open http://localhost:5678
+% timesheet
+open https://armh.sharepoint.com/sites/pwa/_layouts/15/pwa/Timesheet/MyTSSummary.aspx
+% gemini
+open https://gemini.google.com/app
+% copilot
+open https://github.com/copilot
+% chatgpt
+open https://chat.openai.com/chat
+% kaizen
+open https://kaizen.gpu.arm.com/ui/board-booking/ && \
+    echo Drage Platform: 5963r33 Juno TDRx-r0p1 L64 dummy NONEU && \
+    echo Drage Image : /arm/mpdti/user_scratch/walben01/linux/juno_drage_250725
+    echo Krake Platform: 5117r31 Juno TKRx-r0p1 L64 dummy && \
+    echo Krake Image : /arm/mpdti/user_scratch/walben01/linux/juno_krage_010825
+% ti2
+open https://ti2.gpu.arm.com/tables/walben01/runs/
+
+% n8n start server
+docker run -it --rm \
+ --name n8n \
+ -p 5678:5678 \
+ -v n8n_data:/home/node/.n8n \
+ n8n-arm-trusted
+
+
+% internal CPU IP review:
+open <commit_url>
+$ commit_url: printf "https://eu-gerrit-1.euhpc.arm.com/c/VisualCompute/ComputeLibrary/+/%s\n" \
+              770680 770683 770687 770689 770691 770695 770699 770702
+% internal GPU IP review:
+open <commit_url>
+$ commit_url: printf "https://eu-gerrit-1.euhpc.arm.com/c/VisualCompute/ComputeLibrary/+/%s\n" \
+              775535 775533
+% internal CPU CODE review:
+open <commit_url>
+$ commit_url: printf "review.mlplatform.org/c/ml/ComputeLibrary/+/%s\n" \
+              770680 770683 770687 770689 770691 770695 770699 770702
+% internal GPU CODE review:
+open <commit_url>
+$ commit_url: printf "review.mlplatform.org/c/ml/ComputeLibrary/+/%s\n" \
+              775535 775533
+
+% jenkins precommit test
+echo acl branch : refs/heads/main && \
+echo groovy branch : dev_perfetto && \
+echo email : walid.benromdhane@arm.com && \
+open https://acl.ml.arm.com/jenkins/job/ComputeLibraryLinaro_precommit_new_dev/build?delay=0sec
+
+% nightly
+open <nightly>
+$ nightly: printf "%s\n" https://acl.ml.arm.com/jenkins/job/ComputeLibrary_Regression_tests/ \
+                   https://acl.ml.arm.com/jenkins/job/Coverity_nightly/ \
+                   https://acl.ml.arm.com/jenkins/job/ComputeLibrary_package_release/

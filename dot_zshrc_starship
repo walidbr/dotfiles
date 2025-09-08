@@ -1,0 +1,36 @@
+
+source $HOME/.scripts/utils.sh
+
+export STARSHIP_CONFIG=~/.config/starship.toml
+export STARSHIP_CACHE=~/.starship/cache
+
+# starship preset pastel-powerline -o ~/.config/starship.toml
+# starship preset tokyo-night -o ~/.config/starship.toml
+# starship preset catppuccin-powerline -o ~/.config/starship.toml
+# starship preset jetpack -o ~/.config/starship.toml
+# starship preset gruvbox-rainbow -o ~/.config/starship.toml
+
+# mkdir -p ~/.zsh
+# git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export FPATH=~/.zsh/completions:$FPATH
+
+# git clone https://github.com/Aloxaf/fzf-tab ~/.zsh/fzf-tab
+# --- Completion system (required by fzf-tab)
+# fzf-tab and Zsh completion system
+autoload -Uz compinit
+zmodload zsh/complist 2>/dev/null || true
+compinit -u
+source ~/.zsh/fzf-tab/fzf-tab.plugin.zsh
+
+# Initialize Starship
+eval "$(starship init zsh)"
+
+# if tmux has-session -t 0 2>/dev/null; then
+#     tmux attach-session -t 0
+# else
+#     tmux new-session -s 0
+# fi
+neofetch

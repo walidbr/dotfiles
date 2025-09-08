@@ -1,0 +1,18 @@
+
+# Git
+% git push
+cmd="git push <remote> HEAD:refs/for/main%t=<topic>"; echo "> $cmd" ; eval "$cmd"
+$ remote: printf "%s\n" internal origin --- --prevent-extra
+$ topic: printf "%s\n" wip trivial low mid high --- --prevent-extra
+
+% git checkout main
+git pull origin main
+
+% git precommit hook
+curl -Lo .git/hooks/commit-msg https://gerrit-review.googlesource.com/tools/hooks/commit-msg  && chmod +x .git/hooks/commit-msg
+
+% jenkins push
+git push origin <branch> -f
+$ branch: printf "%s\n" "dev_perfetto" "other"
+
+

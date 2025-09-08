@@ -1,0 +1,18 @@
+% echo a greeting
+# Free text input
+echo "Hello <name>"
+
+% pick an OS
+# Fixed list of options (selectable)
+echo "You chose <os>"
+$ os: printf "%s\n" linux mac windows bsd --- --multi --expand --prevent-extra
+
+% pick an process
+# Fixed list of options (selectable)
+echo "You chose <process>"
+$ os: ps aux --- --multi --expand --prevent-extra
+
+% compress or extract
+# Action is a fixed choice; others are free-text
+tar <action> <archive>.tar.gz <path>
+$ action: printf "%s\n" cvf xvf --- --prevent-extra

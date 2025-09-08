@@ -1,0 +1,10 @@
+[opener]
+play = [
+	{ run = 'mpv "$@"', block = true, for = "unix" }
+]
+edit = [
+	{ run = 'code "$@"', orphan = true, for = "unix" }
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]

@@ -1,0 +1,7 @@
+if [ "$STARSHIP" = "1" ]; then
+    source ~/.zshrc_starship
+    export STARSHIP="1"
+else
+    source ~/.zshrc_omzsh
+    export STARSHIP="0"
+fi

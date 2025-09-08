@@ -1,0 +1,3 @@
+# ssh servers
+% euhpc
+echo cd /arm/mpdti/user_scratch/walben01/  && ssh walben01@login2.euhpc.arm.com
