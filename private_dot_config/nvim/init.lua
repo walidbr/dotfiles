@@ -36,6 +36,20 @@ require("lazy").setup({
     end,
   },
 
+  -- Terminal toggle
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup({
+        size = 20,
+        open_mapping = [[<C-\>]], -- You can change this to any keymap
+        direction = "horizontal", -- Changed from "float" to "horizontal"
+        terminal_mappings = true,
+      })
+    end,
+  },
+
   -- Autocompletion
   {
     "hrsh7th/nvim-cmp",
@@ -100,8 +114,16 @@ require("lazy").setup({
         { desc = "Ripgrep (FZF)", silent = false })
 
       -- Extra handy pickers
-      vim.keymap.set("n", "<leader>sf", ":Files<CR>",   { desc = "Files (FZF)" })
+      vim.keymap.set("n", "<leader>sf", ":Files<CR>",    { desc = "Files (FZF)" })
       vim.keymap.set("n", "<leader>sb", ":Buffers<CR>", { desc = "Buffers (FZF)" })
+      vim.keymap.set("n", "<C-p>", ":Files<CR>", { desc = "Find files (FZF)" })
+      
+      -- New keymap for recursive content search (project-wide)
+      vim.keymap.set("n", "<C-l>", ":Rg<CR>", { desc = "Project-wide grep (FZF)" })
+
+      -- Keymap for local file search
+      vim.keymap.set("n", "<C-f>", ":silent !Rg -n --color=always <C-r><C-w> %<CR>", { desc = "Local file grep", silent = false })
+
 
       -- Safe lowercase alias: turn `:rg` into `:Rg` on the cmdline (no custom command!)
       vim.cmd([[
@@ -117,6 +139,20 @@ require("lazy").setup({
       require("Navigator").setup()
     end,
   },
+
+  -- GitHub Copilot
+  { "github/copilot.vim" },
+
+  -- Tabline/Buffer Management
+  {
+    "akinsho/bufferline.nvim",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("bufferline").setup({}) -- Added this line to initialize the plugin
+      vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true, desc = "Previous Tab" })
+      vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true, desc = "Next Tab" })
+    end,
+  }
 })
 
 -- NERDTree: toggle and auto-open when no file is given
