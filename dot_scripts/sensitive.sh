@@ -1,0 +1,9 @@
+export OPENAI_API_KEY=
+export OPENAI_BASE_URL=
+export NODE_EXTRA_CA_CERTS=
+export GEMINI_API_KEY=
+export YOUTUBE_API_KEY=
+export JENKINS_API_TOKEN=
+export JENKINS_USER_ID=
+export JIRA_TOKEN=
+
