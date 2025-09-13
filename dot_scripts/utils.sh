@@ -21,12 +21,32 @@ alias llama="fabric-ai -s -m codellama:7b"
 alias gpt4="fabric-ai -s -m o4-mini"
 alias gpt5="fabric-ai -s -m gpt-5-mini"
 alias GPT5="fabric-ai -s -m gpt-5"
-alias gemini="fabric-ai -s -m gemini-2.5-flash"
+alias Gemini="fabric-ai -s -m gemini-2.5-flash"
 alias commit_msg="git diff HEAD~1 | fabric-ai -s -m o4-mini -p acl_commit"
 alias gw="gum write --width=200 --height=10"
+alias gemini-npx="npx https://github.com/google-gemini/gemini-cli -m gemini-2.5-flash"
 function search {
-  open "https://www.google.com/search?q=$*"
+  prompt=$(gum write)
+  open "https://www.google.com/search?q=$prompt"
 }
+
+ask() {
+  # local model="${1:-gemini-2.5-flash}"
+  if [ "$1" = "gpt" ]; then
+    local model="o4-mini"
+    echo "👉 Using model: $model"
+    local prompt
+    prompt=$(gum write)
+    codex exec  -m "$model" "$prompt" | less
+  elif [ "$1" = "gemini" ] || [ -z "$1" ]; then
+    local model="gemini-2.5-flash"
+    echo "👉 Using model: $model"
+    local prompt
+    prompt=$(gum write)
+    gemini -m "$model" -p "$prompt"
+  fi
+}
+
 source ~/.scripts/sensitive.sh
 
 export GOROOT=$(brew --prefix go)/libexec
@@ -36,6 +56,7 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
 # source $HOME/.scripts/bookmark.sh
 export NAVI_PATH=$HOME/.config/navi/cheats
 alias nq="navi --query"
+alias np="navi --path ./"
 alias h="history | fzf | awk '{\$1=\"\"; sub(/^[ \t]+/,\"\"); printf \"%s\", \$0}' | pbcopy"
 he() {
   local cmd
